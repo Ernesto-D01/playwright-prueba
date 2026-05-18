@@ -6,3 +6,7 @@
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+Data/credentials.json
+Data/token.json
+Data/generateToken.ts
+Data/usuarios.json

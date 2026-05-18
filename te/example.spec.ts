@@ -1,18 +1,19 @@
 import { test, expect } from '@playwright/test';
+import PaginaLanding from '../pages/PaginaLanding';
+import PaginaSignup from '../pages/PaginaSignup';
+import Data from '../Data/usuarios.json';
+import { getVerificationCode} from '../Utils/gmailUtils';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+let paginaLanding: PaginaLanding;
+let paginaSignup: PaginaSignup;
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test('C-1 Registro Happy Path', async ({ page }) => {
+  paginaLanding = new PaginaLanding(page)
+  paginaSignup = new PaginaSignup(page)
+  await page.goto('https://qa.biosafeapp.com/.');
+  await paginaLanding.IrRegistroCuenta();
+  await paginaSignup.completaRegistroExitoso(Data.usuarios.correcto);
+  console.log("codigo de verificación:", await getVerificationCode());
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+    
